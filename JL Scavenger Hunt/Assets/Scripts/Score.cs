@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
     [Header("Default Score")]
     public int score = 0;
     [Header("Text Object for Displaying Score")]
-    public TextMeshPro scoreText;
+    public Text scoreText;
 
     public void Start()
     {

@@ -25,4 +25,9 @@ public class PlayerControls : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -30f, 30f),
             transform.position.y, Mathf.Clamp(transform.position.z, -30f, 30f));
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        SceneManager.LoadScene(0);
+    }
 }

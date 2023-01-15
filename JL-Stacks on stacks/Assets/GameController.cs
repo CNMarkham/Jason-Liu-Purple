@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
         {
             NewBlock();
         }
+        text.text = "Final Score: " + Level;
     }
 
     IEnumerator X()

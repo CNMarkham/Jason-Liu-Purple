@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        text.text = "Final Score: " + Level;
 
         if (Done)
         {
@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
         var time = Mathf.Abs(Time.realtimeSinceStartup % 2f - 1f);
         var pos1 = lastCube.transform.position + Vector3.up * 10f;
-        var pos2 = pos1 + ((Level % 2 == 0) ? Vector3.left : Vector3.forward) * 120;
+        var pos2 = pos1 + ((Level % 2 == 0) ? Vector3.left : Vector3.forward) * 200;
 
         if(Level % 2 ==0)
         {
@@ -79,7 +79,6 @@ public class GameController : MonoBehaviour
         {
             Done = true;
             text.gameObject.SetActive(true);
-            text.text = "Final Score: " + Level;
             StartCoroutine(X());
             return;
 

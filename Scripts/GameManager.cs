@@ -57,28 +57,29 @@ public class GameManager : MonoBehaviour
 
         Invoke("SplashScreen", 2f);
     
+        void SplashScreen()
+        {
+            smokeCleared = true;
+            splash.SetActive(true);
+        }
 
+    
     }
 
-    void SplashScreen()
-    {
-        smokeCleared = true;
-        splash.SetActive(true);
-    }
+  
 
 
     // Update is called once per frame
     void Update()
     {
-        
         if (!gameStarted)
         {
-            if (Input.anyKeyDown && smokeCleared)
-            {
-                smokeCleared = false;
+        if (Input.anyKeyDown && smokeCleared)
+        {
                 ResetGame();
-            }
-        }else{
+        }
+        }else
+        {
             if (!player)
             {
                 OnPlayerKilled();
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
 
 
 

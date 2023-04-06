@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
 
     private bool smokeCleared = true;
 
-
+    int bestScore = 0;
+    public Text bestScoreText;
+    private bool beatbestScore;
 
     void Awake()
     {
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
         screenbounds = Camera.main.ScreenToWorldPoint(bob);
         player = playerPrefab;
         scoreText.enabled = false;
+        bestScoreText.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviour
         spawner.active = false;
         title.SetActive(true);
         splash.SetActive(false);
+
+        bestScore = PlayerPrefs.GetInt("BestScore");
+        bestScoreText.text = "Best Score: " + bestScore.ToString();
     }
     void ResetGame()
     {
@@ -48,6 +54,9 @@ public class GameManager : MonoBehaviour
         scoreText.enabled = true;
         scoreSystem.GetComponent<Score>().score = 0;
         scoreSystem.GetComponent<Score>().Start();
+
+        beatbestScore = false;
+        bestScoreText.enabled = true;
     }
 
     void OnPlayerKilled()
@@ -56,8 +65,16 @@ public class GameManager : MonoBehaviour
         gameStarted = false;
 
         Invoke("SplashScreen", 2f);
-    
 
+        score = scoreSystem.GetComponent<Score>().score;
+
+        if(score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt("BestScore", bestScore);
+            beatbestScore = true;
+            bestScoreText.text = "Best Score: " + bestScore.ToString();
+        }
     }
 
     void SplashScreen()
@@ -97,6 +114,23 @@ public class GameManager : MonoBehaviour
                 scoreSystem.GetComponent<Score>().AddScore(pointsWorth);
                 Destroy(bombObject);
             }
+        }
+
+        if(!gameStarted)
+        {
+            var textColor = "#323232";
+
+            if (beatbestScore)
+            {
+                textColor = "#F00";
+            }
+
+            bestScoreText.text = "<color=" + textColor + ">Best Score: " + bestScore.ToString() + "</color>";
+
+        }
+        else
+        {
+            bestScoreText.text = "";
         }
     }
 }

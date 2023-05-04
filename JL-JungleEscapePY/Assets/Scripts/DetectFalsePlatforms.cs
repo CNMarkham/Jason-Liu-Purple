@@ -4,27 +4,28 @@ using UnityEngine;
 
 public class DetectFalsePlatforms : MonoBehaviour
 {
-    private int PlatformLayer = LayerMask.GetMask("FalsePlatforms");
+    private int PlatformLayer;
     public bool raycast;
 
-    void Update()
+    void Start()
     {
-        raycast = Physics.Raycast(transform.forward, Vector3.forward, .15f, 1 << 8);
+        PlatformLayer = LayerMask.GetMask("FalsePlatforms");
     }
 
     void FixedUpdate()
     {
         int layerMask = 1 << 8;
 
-        RaycastHit hit;
+        layerMask = ~layerMask;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward), Color.cyan);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), 3f, 1<<8))
         {
-            Debug.Log("Did not Hit");
+            Debug.Log("Watch out");
         }
         else
         {
-            Debug.Log("Did not hit");
+            Debug.Log("All clear");
         }
     }
 }
